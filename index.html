@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bluffline Analytics — Your vantage point to making smarter decisions</title>
+  <meta name="description" content="Multi-camera 3D person tracking for retail stores. Privacy-first, local hardware, real-time insights. $200/month per store.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       DESIGN TOKENS — OKLCH, earthy Ozark palette
+       Brand hue: 145 (forest green)
+       Warm accent hue: 45 (clay/terracotta)
+       ======================================== */
+    :root {
+      /* Brand — Forest Green */
+      --brand: oklch(62% 0.13 145);
+      --brand-hover: oklch(55% 0.14 145);
+      --brand-subtle: oklch(45% 0.08 145);
+
+      /* Warm Accent — Clay */
+      --clay: oklch(68% 0.11 45);
+      --clay-hover: oklch(62% 0.12 45);
+
+      /* Sandstone */
+      --sand: oklch(82% 0.035 70);
+
+      /* Dark surfaces — earthy, green-tinted */
+      --bg: oklch(13% 0.008 145);
+      --surface-1: oklch(17% 0.010 145);
+      --surface-2: oklch(21% 0.012 145);
+      --surface-3: oklch(25% 0.014 145);
+
+      /* Tinted neutrals — all carry slight green hue */
+      --text: oklch(92% 0.012 145);
+      --text-secondary: oklch(78% 0.012 145);
+      --text-muted: oklch(62% 0.014 145);
+      --text-faint: oklch(48% 0.012 145);
+
+      /* Borders */
+      --border: oklch(28% 0.012 145);
+      --border-strong: oklch(38% 0.014 145);
+
+      /* Semantic */
+      --success: oklch(65% 0.14 145);
+      --warning: oklch(72% 0.13 70);
+      --danger: oklch(62% 0.16 25);
+
+      /* Spacing — 4pt base */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Typography */
+      --font-heading: 'Syne', system-ui, sans-serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+
+      /* Easing */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+      /* Radii */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+
+      /* Shadows — subtle */
+      --shadow-sm: 0 1px 2px oklch(5% 0.01 145 / 0.4);
+      --shadow-md: 0 4px 12px oklch(5% 0.01 145 / 0.3);
+      --shadow-lg: 0 8px 24px oklch(5% 0.01 145 / 0.25);
+
+      /* Layout */
+      --container: 1200px;
+      --container-narrow: 760px;
+    }
+
+    /* ========================================
+       RESET
+       ======================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      font-weight: 350;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    img, svg { display: block; max-width: 100%; }
+
+    a {
+      color: var(--brand);
+      text-decoration: none;
+      transition: color 200ms var(--ease-out);
+    }
+    a:hover { color: var(--brand-hover); }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    ul { list-style: none; }
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.25rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+    }
+
+    h2 {
+      font-size: clamp(1.875rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+      font-weight: 600;
+    }
+
+    h4 {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    p {
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .lead {
+      font-size: clamp(1.125rem, 2vw, 1.35rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 60ch;
+    }
+
+    .eyebrow {
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--brand);
+    }
+
+    /* ========================================
+       LAYOUT
+       ======================================== */
+    .container {
+      max-width: var(--container);
+      margin-inline: auto;
+      padding-inline: var(--space-xl);
+    }
+
+    .container-narrow {
+      max-width: var(--container-narrow);
+      margin-inline: auto;
+      padding-inline: var(--space-xl);
+    }
+
+    section {
+      padding-block: var(--space-3xl);
+      position: relative;
+    }
+
+    .section-header {
+      max-width: 640px;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .section-header > * + * {
+      margin-top: var(--space-md);
+    }
+
+    .text-center { text-align: center; }
+    .text-center .section-header {
+      margin-inline: auto;
+    }
+
+    /* ========================================
+       BUTTONS
+       ======================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-xl);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: var(--radius-full);
+      transition: all 200ms var(--ease-out);
+      white-space: nowrap;
+      min-height: 48px;
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      color: oklch(98% 0.01 145);
+    }
+    .btn-primary:hover {
+      background: var(--brand-hover);
+      color: oklch(98% 0.01 145);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-clay {
+      background: var(--clay);
+      color: oklch(15% 0.02 45);
+    }
+    .btn-clay:hover {
+      background: var(--clay-hover);
+      color: oklch(15% 0.02 45);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      border: 1.5px solid var(--border-strong);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+      background: oklch(20% 0.012 145 / 0.5);
+    }
+
+    .btn-lg {
+      padding: var(--space-lg) var(--space-2xl);
+      font-size: 1.0625rem;
+    }
+
+    /* ========================================
+       NAVIGATION
+       ======================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding-block: var(--space-md);
+      background: oklch(13% 0.008 145 / 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 300ms var(--ease-out);
+    }
+
+    .nav.scrolled {
+      border-bottom-color: var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--container);
+      margin-inline: auto;
+      padding-inline: var(--space-xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-xl);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1875rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: var(--space-xl);
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      font-weight: 450;
+      transition: color 200ms var(--ease-out);
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .nav-menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: var(--space-sm);
+      cursor: pointer;
+    }
+    .nav-menu-btn span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 200ms var(--ease-out);
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: var(--surface-1);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-xl);
+      z-index: 99;
+    }
+    .mobile-menu.open {
+      display: block;
+    }
+    .mobile-menu a {
+      display: block;
+      padding: var(--space-md) 0;
+      color: var(--text-secondary);
+      font-size: 1.0625rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    @media (min-width: 880px) {
+      .nav-links { display: flex; }
+      .nav-menu-btn { display: none; }
+    }
+
+    /* ========================================
+       HERO
+       ======================================== */
+    .hero {
+      padding-top: calc(var(--space-3xl) + 80px);
+      padding-bottom: var(--space-3xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, oklch(45% 0.10 145 / 0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, oklch(50% 0.08 45 / 0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 760px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content > * + * {
+      margin-top: var(--space-lg);
+    }
+
+    .hero h1 {
+      margin-top: var(--space-md);
+    }
+
+    .hero h1 .accent {
+      color: var(--brand);
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.125rem, 2.2vw, 1.4rem);
+      color: var(--text-secondary);
+      max-width: 55ch;
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-xl) !important;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xl);
+      margin-top: var(--space-2xl) !important;
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--border);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-meta-value {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hero-meta-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ========================================
+       PROBLEM SECTION
+       ======================================== */
+    .problem {
+      background: var(--surface-1);
+      border-block: 1px solid var(--border);
+    }
+
+    .problem-statements {
+      display: grid;
+      gap: var(--space-lg);
+      margin-top: var(--space-2xl);
+    }
+
+    .problem-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-lg);
+      align-items: start;
+      padding: var(--space-xl);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+
+    .problem-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: oklch(35% 0.06 25 / 0.3);
+      border-radius: var(--radius-md);
+      flex-shrink: 0;
+    }
+
+    .problem-item h3 {
+      color: var(--text);
+      margin-bottom: var(--space-xs);
+    }
+
+    /* ========================================
+       SOLUTION / HOW IT WORKS
+       ======================================== */
+    .steps {
+      display: grid;
+      gap: var(--space-xl);
+      margin-top: var(--space-2xl);
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+      padding: var(--space-2xl);
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-number {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--brand-subtle);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .step h3 {
+      margin-top: var(--space-sm);
+    }
+
+    .step p {
+      margin-top: var(--space-sm);
+    }
+
+    .step-details {
+      margin-top: var(--space-md);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .step-tag {
+      padding: var(--space-xs) var(--space-md);
+      background: oklch(30% 0.02 145);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    @media (min-width: 768px) {
+      .steps {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .step {
+        padding: var(--space-xl);
+      }
+    }
+
+    /* ========================================
+       PRIVACY SECTION
+       ======================================== */
+    .privacy {
+      background: var(--surface-1);
+      border-block: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .privacy::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, oklch(45% 0.10 145 / 0.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    .privacy .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .privacy-headline {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      font-family: var(--font-heading);
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      max-width: 18ch;
+      margin-bottom: var(--space-xl);
+    }
+
+    .privacy-headline .strike {
+      text-decoration: line-through;
+      text-decoration-color: oklch(62% 0.16 25 / 0.7);
+      text-decoration-thickness: 3px;
+      color: var(--text-muted);
+    }
+
+    .privacy-grid {
+      display: grid;
+      gap: var(--space-lg);
+      margin-top: var(--space-2xl);
+    }
+
+    .privacy-point {
+      padding: var(--space-lg);
+      border-left: 3px solid var(--brand);
+      background: var(--surface-2);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    .privacy-point h4 {
+      color: var(--text);
+      margin-bottom: var(--space-xs);
+      font-family: var(--font-heading);
+      font-size: 1.0625rem;
+    }
+
+    @media (min-width: 768px) {
+      .privacy-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ========================================
+       PRICING
+       ======================================== */
+    .pricing-card {
+      max-width: 520px;
+      margin: var(--space-2xl) auto 0;
+      padding: var(--space-2xl);
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      position: relative;
+    }
+
+    .pricing-card .eyebrow {
+      margin-bottom: var(--space-sm);
+    }
+
+    .price {
+      font-family: var(--font-heading);
+      font-size: clamp(3.5rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .price-unit {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      display: block;
+      margin-top: var(--space-xs);
+    }
+
+    .price-features {
+      display: grid;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .price-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+    }
+
+    .price-feature svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--brand);
+    }
+
+    .pricing-note {
+      text-align: center;
+      margin-top: var(--space-lg);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* ========================================
+       HARDWARE
+       ======================================== */
+    .hardware-grid {
+      display: grid;
+      gap: var(--space-lg);
+      margin-top: var(--space-2xl);
+    }
+
+    .hardware-card {
+      padding: var(--space-xl);
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+
+    .hardware-card h3 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .hardware-spec {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9375rem;
+    }
+    .hardware-spec:last-child { border-bottom: none; }
+    .hardware-spec-label { color: var(--text-muted); }
+    .hardware-spec-value { color: var(--text); font-weight: 500; }
+
+    @media (min-width: 768px) {
+      .hardware-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Hardware diagram */
+    .hardware-diagram {
+      margin-top: var(--space-2xl);
+      padding: var(--space-2xl);
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .diagram-svg {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .diagram-labels {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .diagram-label {
+      padding: var(--space-xs) var(--space-md);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    /* ========================================
+       FAQ
+       ======================================== */
+    .faq-list {
+      display: grid;
+      gap: var(--space-sm);
+      margin-top: var(--space-2xl);
+    }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface-1);
+      overflow: hidden;
+      transition: border-color 200ms var(--ease-out);
+    }
+    .faq-item:hover { border-color: var(--border-strong); }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: var(--space-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-family: var(--font-heading);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--text);
+      min-height: 56px;
+    }
+
+    .faq-toggle {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 300ms var(--ease-out);
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 300ms var(--ease-out);
+    }
+    .faq-item.open .faq-answer {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-answer-inner {
+      overflow: hidden;
+    }
+
+    .faq-answer-inner p {
+      padding: 0 var(--space-lg) var(--space-lg);
+      color: var(--text-secondary);
+    }
+
+    /* ========================================
+       CTA SECTION
+       ======================================== */
+    .cta {
+      background: var(--surface-1);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, oklch(45% 0.10 145 / 0.1), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta h2 {
+      max-width: 16ch;
+      margin-inline: auto;
+    }
+
+    .cta p {
+      max-width: 50ch;
+      margin-inline: auto;
+      margin-top: var(--space-md);
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .cta-contact {
+      margin-top: var(--space-xl);
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    footer {
+      padding-block: var(--space-2xl);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+    }
+
+    .footer-copy {
+      font-size: 0.8125rem;
+      color: var(--text-faint);
+    }
+
+    @media (min-width: 768px) {
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+
+    /* ========================================
+       SCROLL ANIMATIONS
+       ======================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ========================================
+       UTILITY
+       ======================================== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-md);
+      background: oklch(30% 0.04 145);
+      border: 1px solid oklch(40% 0.06 145);
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--brand);
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="oklch(30% 0.06 145)"/>
+          <circle cx="22" cy="8" r="2" fill="var(--brand)"/>
+        </svg>
+        Bluffline
+      </a>
+      <div class="nav-links">
+        <a href="#problem">Why</a>
+        <a href="#solution">How It Works</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.9375rem;">Schedule a Demo</a>
+        <button class="nav-menu-btn" id="menuBtn" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#problem">Why</a>
+    <a href="#solution">How It Works</a>
+    <a href="#privacy">Privacy</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Schedule a Demo</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="badge">
+          <span class="badge-dot"></span>
+          Now accepting pilot stores
+        </span>
+        <h1>Your vantage point to making <span class="accent">smarter decisions</span>.</h1>
+        <p class="hero-tagline">
+          Multi-camera 3D person tracking that shows you exactly how customers move through your store — without cameras watching faces or data leaving your walls.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary btn-lg">Schedule a Demo</a>
+          <a href="#solution" class="btn btn-outline btn-lg">See how it works</a>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-value">$200/mo</span>
+            <span class="hero-meta-label">per store</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-value">~1 hr</span>
+            <span class="hero-meta-label">installation</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-value">0</span>
+            <span class="hero-meta-label">faces recorded</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">The Problem</span>
+        <h2>You're guessing. Stop guessing.</h2>
+        <p class="lead">Every retail decision without data is a bet. Where to place displays. When to schedule staff. Which aisle gets traffic. You're reading tea leaves when you could be reading foot traffic.</p>
+      </div>
+      <div class="problem-statements">
+        <div class="problem-item reveal">
+          <div class="problem-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(68% 0.11 45)" stroke-width="2" stroke-linecap="round">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+          </div>
+          <div>
+            <h3>"We moved the endcap but can't tell if it worked."</h3>
+            <p>Without traffic data, you can't measure the impact of merchandising changes. Was that display a hit, or did everyone walk past it?</p>
+          </div>
+        </div>
+        <div class="problem-item reveal">
+          <div class="problem-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(68% 0.11 45)" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <div>
+            <h3>"I think we're overstaffed in the morning."</h3>
+            <p>You feel it, but can't prove it. Scheduling by gut means wasted payroll during slow hours and customers waiting during peaks.</p>
+          </div>
+        </div>
+        <div class="problem-item reveal">
+          <div class="problem-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(68% 0.11 45)" stroke-width="2" stroke-linecap="round">
+              <path d="M3 3v18h18"/>
+              <path d="M7 14l4-4 4 4 5-5"/>
+            </svg>
+          </div>
+          <div>
+            <h3>"Our peak hours feel busy, but are they converting?"</h3>
+            <p>Door counters tell you how many entered. They don't tell you where people went, how long they stayed, or which aisles are dead zones.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section id="solution">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">How It Works</span>
+        <h2>Three steps from install to insight.</h2>
+        <p class="lead">No construction crew. No IT department. No monthly technician visits. You set it up, plug it in, and start seeing your store differently.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-number">01</div>
+          <h3>Install</h3>
+          <p>A 3D-printed ceiling mount holds four wide-angle cameras and a Jetson processing unit. Mount it, plug it in. About an hour, start to finish.</p>
+          <div class="step-details">
+            <span class="step-tag">4 × 120° FOV cameras</span>
+            <span class="step-tag">Ceiling-mounted</span>
+            <span class="step-tag">~1 hour</span>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-number">02</div>
+          <h3>Connect</h3>
+          <p>Self-hosted on your network. A Cloudflare Tunnel gives you secure remote access to the dashboard from anywhere. Core tracking works without internet.</p>
+          <div class="step-details">
+            <span class="step-tag">Local network</span>
+            <span class="step-tag">Cloudflare Tunnel</span>
+            <span class="step-tag">No cloud required</span>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-number">03</div>
+          <h3>Decide</h3>
+          <p>Open your dashboard to heatmaps, traffic flow paths, dwell zones, and peak-hour breakdowns. Make decisions with data, not vibes.</p>
+          <div class="step-details">
+            <span class="step-tag">Heatmaps</span>
+            <span class="step-tag">Dwell time</span>
+            <span class="step-tag">Traffic flow</span>
+            <span class="step-tag">Peak hours</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="privacy" id="privacy">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Privacy First</span>
+        <h2 class="privacy-headline">We see <span class="strike">faces</span> movement.</h2>
+        <p class="lead">This is the part that matters most. Bluffline tracks pose — the position and movement of bodies — not identities. No facial recognition. No audio recording. No way to identify anyone, ever.</p>
+      </div>
+      <div class="privacy-grid">
+        <div class="privacy-point reveal">
+          <h4>No facial recognition</h4>
+          <p>The AI model detects body pose keypoints (shoulders, arms, torso). It never identifies who someone is. It can't. That's by design.</p>
+        </div>
+        <div class="privacy-point reveal">
+          <h4>No audio recording</h4>
+          <p>Microphones aren't part of the system. Not disabled — not installed. Movement is visual data only.</p>
+        </div>
+        <div class="privacy-point reveal">
+          <h4>Your data never leaves your store</h4>
+          <p>All processing happens on the NVIDIA Jetson inside your building. The dashboard is accessed through an encrypted tunnel, but the raw video stays local.</p>
+        </div>
+        <div class="privacy-point reveal">
+          <h4>No cloud dependency</h4>
+          <p>Core tracking, heatmaps, and analytics run entirely on local hardware. Internet goes down? You still get insights. Cloudflare Tunnel is just for remote viewing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container text-center">
+      <div class="section-header reveal" style="margin-inline: auto;">
+        <span class="eyebrow">Pricing</span>
+        <h2>Simple, honest pricing.</h2>
+        <p class="lead" style="margin-inline: auto;">One price per store. You own the hardware. Cancel anytime after 90 days.</p>
+      </div>
+      <div class="pricing-card reveal">
+        <span class="eyebrow">Per Store</span>
+        <div class="price">$200<span style="font-size: 0.5em; color: var(--text-muted);">/mo</span></div>
+        <span class="price-unit">90-day minimum commitment</span>
+        <div class="price-features">
+          <div class="price-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Full analytics dashboard with heatmaps, traffic flow, and dwell time
+          </div>
+          <div class="price-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Remote access via secure Cloudflare Tunnel
+          </div>
+          <div class="price-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Multi-location benchmarking (anonymized, aggregated)
+          </div>
+          <div class="price-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            You own all hardware (~$250-300 value per install)
+          </div>
+          <div class="price-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Support and firmware updates included
+          </div>
+          <div class="price-feature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            $50 referral discount — for you and the store you refer
+          </div>
+        </div>
+      </div>
+      <p class="pricing-note">No setup fees. No hidden costs. You provide the ceiling; we provide everything else.</p>
+    </div>
+  </section>
+
+  <!-- HARDWARE -->
+  <section id="hardware" style="background: var(--surface-1); border-block: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">The Hardware</span>
+        <h2>Built to be practical, not flashy.</h2>
+        <p class="lead">Off-the-shelf components in a custom 3D-printed enclosure. Everything is repairable and replaceable. You own it outright.</p>
+      </div>
+      <div class="hardware-grid">
+        <div class="hardware-card reveal">
+          <h3>Processing Unit</h3>
+          <p style="margin-bottom: var(--space-lg);">NVIDIA Jetson Orin Nano Super handles all AI inference locally. No cloud GPU rentals, no per-inference API costs.</p>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">Chip</span>
+            <span class="hardware-spec-value">Jetson Orin Nano Super</span>
+          </div>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">Memory</span>
+            <span class="hardware-spec-value">8 GB LPDDR5</span>
+          </div>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">Power Draw</span>
+            <span class="hardware-spec-value">7-15W</span>
+          </div>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">AI Performance</span>
+            <span class="hardware-spec-value">40 TOPS</span>
+          </div>
+        </div>
+        <div class="hardware-card reveal">
+          <h3>Camera Array</h3>
+          <p style="margin-bottom: var(--space-lg);">Four OV5640 USB cameras with 120° wide-angle lenses, arranged in a truncated pyramid for full 360° coverage.</p>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">Sensors</span>
+            <span class="hardware-spec-value">4 × OV5640 (5MP)</span>
+          </div>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">Resolution</span>
+            <span class="hardware-spec-value">1080p per camera</span>
+          </div>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">Lens</span>
+            <span class="hardware-spec-value">120° FOV</span>
+          </div>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">Combined View</span>
+            <span class="hardware-spec-value">360° panorama</span>
+          </div>
+        </div>
+      </div>
+      <div class="hardware-diagram reveal">
+        <h3 style="margin-bottom: var(--space-md);">Stitched Panorama Pipeline</h3>
+        <svg class="diagram-svg" viewBox="0 0 480 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Camera lenses -->
+          <rect x="20" y="60" width="60" height="80" rx="8" fill="oklch(25% 0.02 145)" stroke="oklch(45% 0.06 145)" stroke-width="1.5"/>
+          <rect x="90" y="60" width="60" height="80" rx="8" fill="oklch(25% 0.02 145)" stroke="oklch(45% 0.06 145)" stroke-width="1.5"/>
+          <rect x="160" y="60" width="60" height="80" rx="8" fill="oklch(25% 0.02 145)" stroke="oklch(45% 0.06 145)" stroke-width="1.5"/>
+          <rect x="230" y="60" width="60" height="80" rx="8" fill="oklch(25% 0.02 145)" stroke="oklch(45% 0.06 145)" stroke-width="1.5"/>
+          <!-- Camera labels -->
+          <text x="50" y="52" text-anchor="middle" font-family="DM Sans" font-size="11" fill="oklch(62% 0.014 145)">CAM 1</text>
+          <text x="120" y="52" text-anchor="middle" font-family="DM Sans" font-size="11" fill="oklch(62% 0.014 145)">CAM 2</text>
+          <text x="190" y="52" text-anchor="middle" font-family="DM Sans" font-size="11" fill="oklch(62% 0.014 145)">CAM 3</text>
+          <text x="260" y="52" text-anchor="middle" font-family="DM Sans" font-size="11" fill="oklch(62% 0.014 145)">CAM 4</text>
+          <!-- Arrows -->
+          <path d="M310 100 L350 100" stroke="oklch(45% 0.06 145)" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)"/>
+          <!-- Stitch box -->
+          <rect x="350" y="70" width="110" height="60" rx="8" fill="oklch(30% 0.04 145)" stroke="var(--brand)" stroke-width="1.5"/>
+          <text x="405" y="95" text-anchor="middle" font-family="Syne" font-weight="600" font-size="12" fill="var(--text)">360° Stitch</text>
+          <text x="405" y="112" text-anchor="middle" font-family="DM Sans" font-size="10" fill="oklch(62% 0.014 145)">Single AI pass</text>
+          <!-- Arrow down -->
+          <path d="M405 135 L405 165" stroke="oklch(45% 0.06 145)" stroke-width="2" stroke-linecap="round" marker-end="url(#arrow)"/>
+          <!-- Output -->
+          <rect x="335" y="170" width="140" height="24" rx="12" fill="oklch(35% 0.06 145)" stroke="var(--brand)" stroke-width="1"/>
+          <text x="405" y="186" text-anchor="middle" font-family="DM Sans" font-weight="500" font-size="11" fill="var(--brand)">MediaPipe → ByteTrack</text>
+          <!-- Arrow marker -->
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="oklch(45% 0.06 145)"/>
+            </marker>
+          </defs>
+        </svg>
+        <div class="diagram-labels">
+          <span class="diagram-label">4 × 1080p input</span>
+          <span class="diagram-label">Panoramic stitch</span>
+          <span class="diagram-label">Single model pass</span>
+          <span class="diagram-label">Pose + tracking output</span>
+          <span class="diagram-label">5-10s latency</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container-narrow">
+      <div class="section-header reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions, answered.</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Can this identify individual customers?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>No. The system uses MediaPipe pose detection, which identifies body keypoints (shoulders, elbows, torso center) — not faces, not skin, not any identifying feature. ByteTrack follows the movement of these pose points across frames. There's no mechanism to link a tracked body to a name, a loyalty account, or a returning visit. It sees a person the way a motion sensor sees a person.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>What happens if my internet goes down?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Core tracking continues to work. The cameras, Jetson, and AI pipeline are entirely local. You'll lose remote dashboard access until the Cloudflare Tunnel reconnects, but the system keeps collecting data. When internet returns, the tunnel reconnects automatically.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>How long does installation take?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>About an hour. The 3D-printed enclosure mounts to a standard ceiling junction box or can be suspended. Run one USB cable bundle and one power cable to the Jetson, connect to your network, and you're collecting data. We provide an installation guide and can walk you through it remotely.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>What's the 5-10 second latency? Is that a problem?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>The system stitches four camera feeds into one panorama, then runs a single AI pass on the combined image. That pipeline takes 5-10 seconds from capture to dashboard update. For analytics — heatmaps, dwell time, traffic patterns — that latency is invisible. Bluffline is an insights tool, not a security system. You're reviewing trends, not watching live feeds.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Do I own the hardware?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Yes. The hardware cost (~$250-300) is included in your subscription. If you cancel after the 90-day minimum, you keep the hardware. No return shipping, no buyout fees. It's yours.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Can I compare data across multiple store locations?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Yes. The benchmarking feature aggregates anonymized data across your locations so you can spot trends — which store gets more foot traffic on Saturdays, which has longer dwell times in specific zones, etc. All aggregated data is stripped of any location-identifiable detail before comparison.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>What size store is this built for?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Independent retail stores and small chains, typically 1,000-5,000 sq ft. The 4-camera array covers a wide single-room space. For larger stores or multi-room layouts, multiple units can be deployed and their data combined in the dashboard. The system is designed for small business budgets and infrastructure, not enterprise deployments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Get Started</span>
+        <h2>See your store differently.</h2>
+        <p>Schedule a 30-minute demo. We'll show you the dashboard, walk through the hardware, and answer every question you've got. No pressure, no sales pipeline — just a conversation about your store.</p>
+        <div class="cta-actions">
+          <a href="mailto:hello@blufflineanalytics.com" class="btn btn-primary btn-lg">Schedule a Demo</a>
+          <a href="mailto:hello@blufflineanalytics.com" class="btn btn-outline btn-lg">Email us</a>
+        </div>
+        <p class="cta-contact">Questions? Email <a href="mailto:hello@blufflineanalytics.com">hello@blufflineanalytics.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px;">
+            <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="oklch(30% 0.06 145)"/>
+            <circle cx="22" cy="8" r="2" fill="var(--brand)"/>
+          </svg>
+          Bluffline Analytics
+        </div>
+        <p class="footer-copy">© 2026 Bluffline Analytics. Built in the Ozarks.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // Scroll reveal — Intersection Observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = `${Math.min(idx * 60, 240)}ms`;
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -60px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>
