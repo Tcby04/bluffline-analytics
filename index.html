@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,46 +7,49 @@
   <meta name="description" content="Multi-camera 3D person tracking for retail stores. Privacy-first, local hardware, real-time insights. $200/month per store.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ========================================
-       DESIGN TOKENS — OKLCH, earthy Ozark palette
-       Brand hue: 145 (forest green)
-       Warm accent hue: 45 (clay/terracotta)
+       DESIGN TOKENS — OKLCH, warm cream palette
+       Brand hue: 40 (terracotta/clay)
+       Secondary hue: 140 (warm sage)
        ======================================== */
     :root {
-      /* Brand — Forest Green */
-      --brand: oklch(62% 0.13 145);
-      --brand-hover: oklch(55% 0.14 145);
-      --brand-subtle: oklch(45% 0.08 145);
+      /* Brand — Terracotta / Warm Clay */
+      --brand: oklch(55% 0.12 40);
+      --brand-hover: oklch(48% 0.13 40);
+      --brand-subtle: oklch(70% 0.08 40);
 
       /* Warm Accent — Clay */
-      --clay: oklch(68% 0.11 45);
-      --clay-hover: oklch(62% 0.12 45);
+      --clay: oklch(62% 0.11 40);
+      --clay-hover: oklch(55% 0.12 40);
+
+      /* Warm Sage — secondary accent */
+      --sage: oklch(55% 0.06 140);
 
       /* Sandstone */
       --sand: oklch(82% 0.035 70);
 
-      /* Dark surfaces — earthy, green-tinted */
-      --bg: oklch(13% 0.008 145);
-      --surface-1: oklch(17% 0.010 145);
-      --surface-2: oklch(21% 0.012 145);
-      --surface-3: oklch(25% 0.014 145);
+      /* Light warm surfaces — cream/sandstone */
+      --bg: oklch(97% 0.01 60);
+      --surface-1: oklch(94% 0.012 55);
+      --surface-2: oklch(91% 0.014 50);
+      --surface-3: oklch(88% 0.015 50);
 
-      /* Tinted neutrals — all carry slight green hue */
-      --text: oklch(92% 0.012 145);
-      --text-secondary: oklch(78% 0.012 145);
-      --text-muted: oklch(62% 0.014 145);
-      --text-faint: oklch(48% 0.012 145);
+      /* Tinted neutrals — warm browns */
+      --text: oklch(25% 0.02 50);
+      --text-secondary: oklch(42% 0.018 50);
+      --text-muted: oklch(52% 0.015 50);
+      --text-faint: oklch(62% 0.012 50);
 
-      /* Borders */
-      --border: oklch(28% 0.012 145);
-      --border-strong: oklch(38% 0.014 145);
+      /* Borders — warm tinted */
+      --border: oklch(82% 0.012 50);
+      --border-strong: oklch(72% 0.015 45);
 
       /* Semantic */
-      --success: oklch(65% 0.14 145);
-      --warning: oklch(72% 0.13 70);
-      --danger: oklch(62% 0.16 25);
+      --success: oklch(55% 0.08 140);
+      --warning: oklch(68% 0.12 70);
+      --danger: oklch(55% 0.16 25);
 
       /* Spacing — 4pt base */
       --space-xs: 0.25rem;
@@ -58,23 +61,23 @@
       --space-3xl: 6rem;
 
       /* Typography */
-      --font-heading: 'Syne', system-ui, sans-serif;
-      --font-body: 'DM Sans', system-ui, sans-serif;
+      --font-heading: 'Fraunces', Georgia, serif;
+      --font-body: 'Figtree', system-ui, sans-serif;
 
       /* Easing */
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
       /* Radii */
-      --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 16px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
       --radius-full: 9999px;
 
-      /* Shadows — subtle */
-      --shadow-sm: 0 1px 2px oklch(5% 0.01 145 / 0.4);
-      --shadow-md: 0 4px 12px oklch(5% 0.01 145 / 0.3);
-      --shadow-lg: 0 8px 24px oklch(5% 0.01 145 / 0.25);
+      /* Shadows — soft, warm */
+      --shadow-sm: 0 1px 3px oklch(30% 0.02 50 / 0.08);
+      --shadow-md: 0 4px 16px oklch(30% 0.02 50 / 0.1);
+      --shadow-lg: 0 8px 30px oklch(30% 0.02 50 / 0.12);
 
       /* Layout */
       --container: 1200px;
@@ -98,7 +101,7 @@
     body {
       font-family: var(--font-body);
       font-size: 1.0625rem;
-      font-weight: 350;
+      font-weight: 400;
       line-height: 1.65;
       color: var(--text);
       background: var(--bg);
@@ -130,32 +133,33 @@
        ======================================== */
     h1, h2, h3, h4 {
       font-family: var(--font-heading);
-      font-weight: 700;
+      font-weight: 600;
       line-height: 1.15;
       letter-spacing: -0.02em;
       color: var(--text);
+      font-variation-settings: 'SOFT' 50, 'WONK' 0;
     }
 
     h1 {
       font-size: clamp(2.5rem, 6vw, 4.25rem);
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: -0.035em;
     }
 
     h2 {
       font-size: clamp(1.875rem, 4vw, 2.75rem);
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: -0.03em;
     }
 
     h3 {
       font-size: clamp(1.25rem, 2.5vw, 1.625rem);
-      font-weight: 600;
+      font-weight: 500;
     }
 
     h4 {
       font-size: 1.125rem;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     p {
@@ -171,7 +175,7 @@
     }
 
     .eyebrow {
-      font-family: var(--font-heading);
+      font-family: var(--font-body);
       font-size: 0.8125rem;
       font-weight: 600;
       text-transform: uppercase;
@@ -232,22 +236,22 @@
 
     .btn-primary {
       background: var(--brand);
-      color: oklch(98% 0.01 145);
+      color: oklch(98% 0.01 40);
     }
     .btn-primary:hover {
       background: var(--brand-hover);
-      color: oklch(98% 0.01 145);
+      color: oklch(98% 0.01 40);
       transform: translateY(-1px);
       box-shadow: var(--shadow-md);
     }
 
     .btn-clay {
       background: var(--clay);
-      color: oklch(15% 0.02 45);
+      color: oklch(98% 0.01 40);
     }
     .btn-clay:hover {
       background: var(--clay-hover);
-      color: oklch(15% 0.02 45);
+      color: oklch(98% 0.01 40);
       transform: translateY(-1px);
       box-shadow: var(--shadow-md);
     }
@@ -255,11 +259,12 @@
     .btn-outline {
       border: 1.5px solid var(--border-strong);
       color: var(--text);
+      background: transparent;
     }
     .btn-outline:hover {
       border-color: var(--brand);
       color: var(--brand);
-      background: oklch(20% 0.012 145 / 0.5);
+      background: oklch(55% 0.12 40 / 0.06);
     }
 
     .btn-lg {
@@ -277,15 +282,17 @@
       right: 0;
       z-index: 100;
       padding-block: var(--space-md);
-      background: oklch(13% 0.008 145 / 0.85);
+      background: oklch(97% 0.01 60 / 0.88);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid transparent;
-      transition: border-color 300ms var(--ease-out);
+      transition: border-color 300ms var(--ease-out), background 300ms var(--ease-out);
     }
 
     .nav.scrolled {
       border-bottom-color: var(--border);
+      background: oklch(97% 0.01 60 / 0.95);
+      box-shadow: var(--shadow-sm);
     }
 
     .nav-inner {
@@ -356,10 +363,11 @@
       top: 64px;
       left: 0;
       right: 0;
-      background: var(--surface-1);
+      background: oklch(96% 0.011 58);
       border-bottom: 1px solid var(--border);
       padding: var(--space-xl);
       z-index: 99;
+      box-shadow: var(--shadow-md);
     }
     .mobile-menu.open {
       display: block;
@@ -395,7 +403,7 @@
       right: -10%;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, oklch(45% 0.10 145 / 0.15), transparent 70%);
+      background: radial-gradient(circle, oklch(55% 0.12 40 / 0.12), transparent 70%);
       pointer-events: none;
     }
 
@@ -406,7 +414,7 @@
       left: -10%;
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, oklch(50% 0.08 45 / 0.08), transparent 70%);
+      background: radial-gradient(circle, oklch(55% 0.06 140 / 0.08), transparent 70%);
       pointer-events: none;
     }
 
@@ -426,6 +434,8 @@
 
     .hero h1 .accent {
       color: var(--brand);
+      font-style: italic;
+      font-variation-settings: 'SOFT' 100, 'WONK' 1;
     }
 
     .hero-tagline {
@@ -501,7 +511,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: oklch(35% 0.06 25 / 0.3);
+      background: oklch(55% 0.12 40 / 0.1);
       border-radius: var(--radius-md);
       flex-shrink: 0;
     }
@@ -535,10 +545,11 @@
     .step-number {
       font-family: var(--font-heading);
       font-size: 3.5rem;
-      font-weight: 800;
+      font-weight: 700;
       color: var(--brand-subtle);
       line-height: 1;
       letter-spacing: -0.04em;
+      font-variation-settings: 'SOFT' 100, 'WONK' 1;
     }
 
     .step h3 {
@@ -558,8 +569,8 @@
 
     .step-tag {
       padding: var(--space-xs) var(--space-md);
-      background: oklch(30% 0.02 145);
-      border: 1px solid var(--border);
+      background: oklch(55% 0.06 140 / 0.1);
+      border: 1px solid oklch(55% 0.06 140 / 0.2);
       border-radius: var(--radius-full);
       font-size: 0.8125rem;
       color: var(--text-secondary);
@@ -592,7 +603,7 @@
       transform: translate(-50%, -50%);
       width: 800px;
       height: 800px;
-      background: radial-gradient(circle, oklch(45% 0.10 145 / 0.06), transparent 70%);
+      background: radial-gradient(circle, oklch(55% 0.06 140 / 0.07), transparent 70%);
       pointer-events: none;
     }
 
@@ -626,7 +637,7 @@
 
     .privacy-point {
       padding: var(--space-lg);
-      border-left: 3px solid var(--brand);
+      border-left: 3px solid var(--sage);
       background: var(--surface-2);
       border-radius: 0 var(--radius-md) var(--radius-md) 0;
     }
@@ -865,7 +876,7 @@
       transform: translateX(-50%);
       width: 700px;
       height: 700px;
-      background: radial-gradient(circle, oklch(45% 0.10 145 / 0.1), transparent 70%);
+      background: radial-gradient(circle, oklch(55% 0.12 40 / 0.08), transparent 70%);
       pointer-events: none;
     }
 
@@ -971,8 +982,8 @@
       align-items: center;
       gap: var(--space-xs);
       padding: var(--space-xs) var(--space-md);
-      background: oklch(30% 0.04 145);
-      border: 1px solid oklch(40% 0.06 145);
+      background: oklch(55% 0.12 40 / 0.08);
+      border: 1px solid oklch(55% 0.12 40 / 0.15);
       border-radius: var(--radius-full);
       font-size: 0.8125rem;
       font-weight: 500;
@@ -994,7 +1005,7 @@
     <div class="nav-inner">
       <a href="#" class="nav-logo">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="oklch(30% 0.06 145)"/>
+          <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="oklch(55% 0.12 40 / 0.15)"/>
           <circle cx="22" cy="8" r="2" fill="var(--brand)"/>
         </svg>
         Bluffline
@@ -1398,7 +1409,7 @@
       <div class="footer-inner">
         <div class="footer-logo">
           <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px;">
-            <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="oklch(30% 0.06 145)"/>
+            <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="oklch(55% 0.12 40 / 0.15)"/>
             <circle cx="22" cy="8" r="2" fill="var(--brand)"/>
           </svg>
           Bluffline Analytics
