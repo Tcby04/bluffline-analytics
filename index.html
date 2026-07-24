@@ -3,9 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bluffline Analytics — Your vantage point to making smarter decisions</title>
-  <meta name="description" content="Multi-camera 3D person tracking for retail stores. Privacy-first, local hardware, real-time insights. $200/month per store.">
+  <title>Bluffline Analytics — Foot traffic data for small retail stores</title>
+  <meta name="description" content="Foot traffic, busy hours, dwell time, and heatmaps for small retail stores. We install the cameras, you get the data. $250/month per store. No install fee. 90-day minimum.">
+  <meta name="theme-color" content="#f6f0e4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#2a1f17" media="(prefers-color-scheme: dark)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <script>
+    // Theme bootstrap — runs before paint to avoid FOUC.
+    (function () {
+      try {
+        var stored = localStorage.getItem('bluffline-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -14,11 +30,18 @@
        Brand hue: 40 (terracotta/clay)
        Secondary hue: 140 (warm sage)
        ======================================== */
-    :root {
+    :root,
+    :root[data-theme="light"] {
       /* Brand — Terracotta / Warm Clay */
       --brand: oklch(55% 0.12 40);
       --brand-hover: oklch(48% 0.13 40);
       --brand-subtle: oklch(70% 0.08 40);
+      --brand-alpha-06: oklch(55% 0.12 40 / 0.06);
+      --brand-alpha-08: oklch(55% 0.12 40 / 0.08);
+      --brand-alpha-10: oklch(55% 0.12 40 / 0.10);
+      --brand-alpha-12: oklch(55% 0.12 40 / 0.12);
+      --brand-alpha-15: oklch(55% 0.12 40 / 0.15);
+      --brand-alpha-20: oklch(55% 0.12 40 / 0.20);
 
       /* Warm Accent — Clay */
       --clay: oklch(62% 0.11 40);
@@ -26,6 +49,10 @@
 
       /* Warm Sage — secondary accent */
       --sage: oklch(55% 0.06 140);
+      --sage-alpha-07: oklch(55% 0.06 140 / 0.07);
+      --sage-alpha-08: oklch(55% 0.06 140 / 0.08);
+      --sage-alpha-10: oklch(55% 0.06 140 / 0.10);
+      --sage-alpha-20: oklch(55% 0.06 140 / 0.20);
 
       /* Sandstone */
       --sand: oklch(82% 0.035 70);
@@ -46,10 +73,21 @@
       --border: oklch(78% 0.015 50);
       --border-strong: oklch(68% 0.018 45);
 
+      /* Text on brand buttons */
+      --text-on-brand: oklch(98% 0.01 40);
+
+      /* Soft knocks — danger / strike */
+      --danger: oklch(55% 0.16 25);
+      --strike-color: oklch(62% 0.16 25 / 0.7);
+
+      /* Nav surface (translucent over page bg) */
+      --nav-bg: oklch(97% 0.01 60 / 0.88);
+      --nav-bg-scrolled: oklch(97% 0.01 60 / 0.95);
+      --mobile-bg: oklch(96% 0.011 58);
+
       /* Semantic */
       --success: oklch(55% 0.08 140);
       --warning: oklch(68% 0.12 70);
-      --danger: oklch(55% 0.16 25);
 
       /* Spacing — 4pt base */
       --space-xs: 0.25rem;
@@ -75,13 +113,106 @@
       --radius-full: 9999px;
 
       /* Shadows — soft, warm */
-      --shadow-sm: 0 1px 3px oklch(25% 0.02 50 / 0.1);
+      --shadow-sm: 0 1px 3px oklch(25% 0.02 50 / 0.10);
       --shadow-md: 0 4px 16px oklch(25% 0.02 50 / 0.12);
       --shadow-lg: 0 8px 30px oklch(25% 0.02 50 / 0.15);
 
       /* Layout */
       --container: 1200px;
       --container-narrow: 760px;
+
+      /* Theme transition (kept short and warm) */
+      --theme-fade: background-color 300ms var(--ease-out),
+                    color 300ms var(--ease-out),
+                    border-color 300ms var(--ease-out);
+    }
+
+    /* ========================================
+       DARK MODE — same warm palette, low-light tuned
+       Base: dark cocoa. Text: warm cream. Accent: terracotta.
+       ======================================== */
+    :root[data-theme="dark"] {
+      /* Brand — slightly brighter terracotta so it pops on dark */
+      --brand: oklch(70% 0.13 40);
+      --brand-hover: oklch(78% 0.14 40);
+      --brand-subtle: oklch(50% 0.10 40);
+      --brand-alpha-06: oklch(70% 0.13 40 / 0.10);
+      --brand-alpha-08: oklch(70% 0.13 40 / 0.14);
+      --brand-alpha-10: oklch(70% 0.13 40 / 0.18);
+      --brand-alpha-12: oklch(70% 0.13 40 / 0.22);
+      --brand-alpha-15: oklch(70% 0.13 40 / 0.28);
+      --brand-alpha-20: oklch(70% 0.13 40 / 0.36);
+
+      /* Clay — warmer, lifted */
+      --clay: oklch(72% 0.11 40);
+      --clay-hover: oklch(78% 0.12 40);
+
+      /* Sage — sage stays muted, slightly lifted for contrast */
+      --sage: oklch(72% 0.06 140);
+      --sage-alpha-07: oklch(72% 0.06 140 / 0.10);
+      --sage-alpha-08: oklch(72% 0.06 140 / 0.12);
+      --sage-alpha-10: oklch(72% 0.06 140 / 0.16);
+      --sage-alpha-20: oklch(72% 0.06 140 / 0.30);
+
+      /* Sand */
+      --sand: oklch(72% 0.04 70);
+
+      /* Dark cocoa surfaces — keep warm */
+      --bg: oklch(18% 0.012 45);
+      --surface-1: oklch(23% 0.014 45);
+      --surface-2: oklch(27% 0.015 45);
+      --surface-3: oklch(31% 0.016 45);
+
+      /* Cream text on cocoa */
+      --text: oklch(96% 0.012 60);
+      --text-secondary: oklch(82% 0.014 60);
+      --text-muted: oklch(68% 0.014 55);
+      --text-faint: oklch(54% 0.012 50);
+
+      /* Borders — warm-tinted dark cocoa */
+      --border: oklch(34% 0.018 45);
+      --border-strong: oklch(46% 0.022 45);
+
+      /* Text on brand buttons (still cream) */
+      --text-on-brand: oklch(15% 0.02 40);
+
+      /* Strike-through stays warm red */
+      --danger: oklch(70% 0.16 25);
+      --strike-color: oklch(70% 0.18 25 / 0.6);
+
+      /* Nav surface (translucent over dark page) */
+      --nav-bg: oklch(18% 0.012 45 / 0.88);
+      --nav-bg-scrolled: oklch(18% 0.012 45 / 0.95);
+      --mobile-bg: oklch(22% 0.014 45);
+
+      /* Semantic */
+      --success: oklch(70% 0.10 140);
+      --warning: oklch(76% 0.12 70);
+
+      /* Shadows — deeper, still warm */
+      --shadow-sm: 0 1px 3px oklch(0% 0 0 / 0.30);
+      --shadow-md: 0 4px 16px oklch(0% 0 0 / 0.40);
+      --shadow-lg: 0 8px 30px oklch(0% 0 0 / 0.50);
+    }
+
+    /* ========================================
+       THEME TRANSITION — apply to themed elements only.
+       Set via `transition: var(--theme-fade)` on key containers.
+       ======================================== */
+    body,
+    .nav,
+    .nav.scrolled,
+    .mobile-menu,
+    section,
+    .problem-item,
+    .step,
+    .privacy-point,
+    .pricing-card,
+    .hardware-card,
+    .hardware-diagram,
+    .faq-item,
+    footer {
+      transition: var(--theme-fade);
     }
 
     /* ========================================
@@ -108,6 +239,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      transition: background-color 300ms var(--ease-out), color 300ms var(--ease-out);
     }
 
     img, svg { display: block; max-width: 100%; }
@@ -236,22 +368,22 @@
 
     .btn-primary {
       background: var(--brand);
-      color: oklch(98% 0.01 40);
+      color: var(--text-on-brand);
     }
     .btn-primary:hover {
       background: var(--brand-hover);
-      color: oklch(98% 0.01 40);
+      color: var(--text-on-brand);
       transform: translateY(-1px);
       box-shadow: var(--shadow-md);
     }
 
     .btn-clay {
       background: var(--clay);
-      color: oklch(98% 0.01 40);
+      color: var(--text-on-brand);
     }
     .btn-clay:hover {
       background: var(--clay-hover);
-      color: oklch(98% 0.01 40);
+      color: var(--text-on-brand);
       transform: translateY(-1px);
       box-shadow: var(--shadow-md);
     }
@@ -264,7 +396,7 @@
     .btn-outline:hover {
       border-color: var(--brand);
       color: var(--brand);
-      background: oklch(55% 0.12 40 / 0.06);
+      background: var(--brand-alpha-06);
     }
 
     .btn-lg {
@@ -282,16 +414,16 @@
       right: 0;
       z-index: 100;
       padding-block: var(--space-md);
-      background: oklch(97% 0.01 60 / 0.88);
+      background: var(--nav-bg);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid transparent;
-      transition: border-color 300ms var(--ease-out), background 300ms var(--ease-out);
+      transition: border-color 300ms var(--ease-out), background-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
     }
 
     .nav.scrolled {
       border-bottom-color: var(--border);
-      background: oklch(97% 0.01 60 / 0.95);
+      background: var(--nav-bg-scrolled);
       box-shadow: var(--shadow-sm);
     }
 
@@ -356,6 +488,42 @@
       transition: all 200ms var(--ease-out);
     }
 
+    /* ========================================
+       THEME TOGGLE — sun/moon, fits the pill nav
+       ======================================== */
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      transition: background-color 200ms var(--ease-out),
+                  color 200ms var(--ease-out),
+                  border-color 200ms var(--ease-out),
+                  transform 200ms var(--ease-out);
+    }
+    .theme-toggle:hover {
+      background: var(--brand-alpha-08);
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+    .theme-toggle:active {
+      transform: scale(0.94);
+    }
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+    :root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+    :root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
     /* Mobile menu */
     .mobile-menu {
       display: none;
@@ -363,7 +531,7 @@
       top: 64px;
       left: 0;
       right: 0;
-      background: oklch(96% 0.011 58);
+      background: var(--mobile-bg);
       border-bottom: 1px solid var(--border);
       padding: var(--space-xl);
       z-index: 99;
@@ -403,7 +571,7 @@
       right: -10%;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, oklch(55% 0.12 40 / 0.12), transparent 70%);
+      background: radial-gradient(circle, var(--brand-alpha-12), transparent 70%);
       pointer-events: none;
     }
 
@@ -414,7 +582,7 @@
       left: -10%;
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, oklch(55% 0.06 140 / 0.08), transparent 70%);
+      background: radial-gradient(circle, var(--sage-alpha-08), transparent 70%);
       pointer-events: none;
     }
 
@@ -511,9 +679,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: oklch(55% 0.12 40 / 0.1);
+      background: var(--brand-alpha-10);
       border-radius: var(--radius-md);
       flex-shrink: 0;
+      color: var(--brand);
     }
 
     .problem-item h3 {
@@ -569,8 +738,8 @@
 
     .step-tag {
       padding: var(--space-xs) var(--space-md);
-      background: oklch(55% 0.06 140 / 0.1);
-      border: 1px solid oklch(55% 0.06 140 / 0.2);
+      background: var(--sage-alpha-10);
+      border: 1px solid var(--sage-alpha-20);
       border-radius: var(--radius-full);
       font-size: 0.8125rem;
       color: var(--text-secondary);
@@ -603,7 +772,7 @@
       transform: translate(-50%, -50%);
       width: 800px;
       height: 800px;
-      background: radial-gradient(circle, oklch(55% 0.06 140 / 0.07), transparent 70%);
+      background: radial-gradient(circle, var(--sage-alpha-07), transparent 70%);
       pointer-events: none;
     }
 
@@ -624,7 +793,7 @@
 
     .privacy-headline .strike {
       text-decoration: line-through;
-      text-decoration-color: oklch(62% 0.16 25 / 0.7);
+      text-decoration-color: var(--strike-color);
       text-decoration-thickness: 3px;
       color: var(--text-muted);
     }
@@ -881,7 +1050,7 @@
       transform: translateX(-50%);
       width: 700px;
       height: 700px;
-      background: radial-gradient(circle, oklch(55% 0.12 40 / 0.08), transparent 70%);
+      background: radial-gradient(circle, var(--brand-alpha-08), transparent 70%);
       pointer-events: none;
     }
 
@@ -987,8 +1156,8 @@
       align-items: center;
       gap: var(--space-xs);
       padding: var(--space-xs) var(--space-md);
-      background: oklch(55% 0.12 40 / 0.08);
-      border: 1px solid oklch(55% 0.12 40 / 0.15);
+      background: var(--brand-alpha-08);
+      border: 1px solid var(--brand-alpha-15);
       border-radius: var(--radius-full);
       font-size: 0.8125rem;
       font-weight: 500;
@@ -1010,7 +1179,7 @@
     <div class="nav-inner">
       <a href="#" class="nav-logo">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="oklch(55% 0.12 40 / 0.15)"/>
+          <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" style="fill: var(--brand-alpha-15)"/>
           <circle cx="22" cy="8" r="2" fill="var(--brand)"/>
         </svg>
         Bluffline
@@ -1024,6 +1193,15 @@
       </div>
       <div class="nav-cta">
         <a href="#contact" class="btn btn-primary" style="padding: 0.5rem 1.25rem; font-size: 0.9375rem;">Schedule a Demo</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Toggle light/dark">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+        </button>
         <button class="nav-menu-btn" id="menuBtn" aria-label="Open menu">
           <span></span><span></span><span></span>
         </button>
@@ -1050,7 +1228,7 @@
         </span>
         <h1>Know exactly <span class="accent">how customers move</span> through your store.</h1>
         <p class="hero-tagline">
-          Foot traffic, busy zones, peak hours, and dwell time — all on one simple dashboard. No facial recognition. No complicated setup. Just clear answers about your store.
+          Foot traffic, busy hours, dwell time, and heatmaps — all on one simple dashboard. No facial recognition. No IT guy. We install the cameras, we run them — you see the data.
         </p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary btn-lg">Schedule a Demo</a>
@@ -1058,8 +1236,8 @@
         </div>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <span class="hero-meta-value">$200/mo</span>
-            <span class="hero-meta-label">per store</span>
+            <span class="hero-meta-value">$250/mo</span>
+            <span class="hero-meta-label">per store, no install fee</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-value">~1 hr</span>
@@ -1085,18 +1263,18 @@
       <div class="problem-statements">
         <div class="problem-item reveal">
           <div class="problem-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(68% 0.11 45)" stroke-width="2" stroke-linecap="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
               <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
             </svg>
           </div>
           <div>
-            <h3>"We moved the endcap but can't tell if it worked."</h3>
+            <h3>"We moved the endcap display but can't tell if it worked."</h3>
             <p>Without traffic data, you can't measure the impact of merchandising changes. Was that display a hit, or did everyone walk past it?</p>
           </div>
         </div>
         <div class="problem-item reveal">
           <div class="problem-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(68% 0.11 45)" stroke-width="2" stroke-linecap="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
               <circle cx="12" cy="12" r="10"/>
               <path d="M12 6v6l4 2"/>
             </svg>
@@ -1108,7 +1286,7 @@
         </div>
         <div class="problem-item reveal">
           <div class="problem-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(68% 0.11 45)" stroke-width="2" stroke-linecap="round">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
               <path d="M3 3v18h18"/>
               <path d="M7 14l4-4 4 4 5-5"/>
             </svg>
@@ -1134,10 +1312,11 @@
         <div class="step reveal">
           <div class="step-number">01</div>
           <h3>We Install</h3>
-          <p>A small ceiling-mounted unit goes up in about an hour. One trip to the ceiling, plug it in, done. We handle the whole install.</p>
+          <p>A small ceiling-mounted unit goes up in about an hour. One trip to the ceiling, plug it in, done. We own the hardware — you don't pay an install fee, just the monthly subscription.</p>
           <div class="step-details">
             <span class="step-tag">~1 hour setup</span>
-            <span class="step-tag">We handle it</span>
+            <span class="step-tag">We own the gear</span>
+            <span class="step-tag">No install fee</span>
           </div>
         </div>
         <div class="step reveal">
@@ -1160,6 +1339,21 @@
             <span class="step-tag">Traffic flow</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNDER THE HOOD -->
+  <section id="under-the-hood">
+    <div class="container-narrow">
+      <div class="section-header reveal">
+        <span class="eyebrow">Under the Hood</span>
+        <h2>The nerdy bit, in plain English.</h2>
+      </div>
+      <div class="reveal">
+        <p class="lead">You don't need to know any of this to use Bluffline. But if you're the kind of person who wants to know what's actually running on your ceiling, here it is.</p>
+        <p style="margin-top: var(--space-md);">The sensor unit runs an NVIDIA chip — the same kind of processor used in self-driving cars and robotics. It does all the tracking on-site, in real time. No video ever gets uploaded to the cloud.</p>
+        <p style="margin-top: var(--space-md);">When our tracking software gets better, the cameras recalibrate themselves automatically. No technician visit, no recalibration appointment. The system just figures out where every camera is and who walked where, on its own.</p>
       </div>
     </div>
   </section>
@@ -1199,40 +1393,40 @@
       <div class="section-header reveal" style="margin-inline: auto;">
         <span class="eyebrow">Pricing</span>
         <h2>Simple, honest pricing.</h2>
-        <p class="lead" style="margin-inline: auto;">One price per store. Everything included. Cancel anytime after 90 days.</p>
+        <p class="lead" style="margin-inline: auto;">$250 per store. One price. No install fee. 90-day minimum. We own the hardware — you pay one monthly fee for the data.</p>
       </div>
       <div class="pricing-card reveal">
-        <span class="eyebrow">Per Store</span>
-        <div class="price">$200<span style="font-size: 0.5em; color: var(--text-muted);">/mo</span></div>
-        <span class="price-unit">90-day minimum commitment</span>
+        <span class="eyebrow">Per Store, Flat</span>
+        <div class="price">$250<span style="font-size: 0.5em; color: var(--text-muted);">/mo</span></div>
+        <span class="price-unit">No install fee · 90-day minimum</span>
         <div class="price-features">
           <div class="price-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            Full analytics dashboard with heatmaps, traffic flow, and dwell time
+            Full analytics dashboard — foot traffic, busy hours, dwell time, heatmaps
           </div>
           <div class="price-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            Access your dashboard from anywhere
+            No install fee. Equipment is ours, not yours.
           </div>
           <div class="price-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            Multi-location benchmarking (anonymized, aggregated)
+            90-day minimum. Cancel anytime after — we come pick up the gear.
           </div>
           <div class="price-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            Equipment included — we provide everything
+            Access your dashboard from any phone, tablet, or computer
           </div>
           <div class="price-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            Support and firmware updates included
+            We install it, we run it, we fix it — you don't touch it
           </div>
           <div class="price-feature">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            $50 referral discount — for you and the store you refer
+            Built for small retail (1,000–5,000 sq ft), not enterprise contracts
           </div>
         </div>
       </div>
-      <p class="pricing-note">No setup fees. No hidden costs. You provide the ceiling; we provide everything else.</p>
+      <p class="pricing-note">$250/month per store. One price. No install fee. 90-day minimum.</p>
     </div>
   </section>
 
@@ -1254,7 +1448,7 @@
           </div>
           <div class="hardware-spec">
             <span class="hardware-spec-label">Covers</span>
-            <span class="hardware-spec-value">Up to 5,000 sq ft</span>
+            <span class="hardware-spec-value">1,000–5,000 sq ft</span>
           </div>
           <div class="hardware-spec">
             <span class="hardware-spec-label">Size</span>
@@ -1263,6 +1457,10 @@
           <div class="hardware-spec">
             <span class="hardware-spec-label">Needs</span>
             <span class="hardware-spec-value">One power outlet</span>
+          </div>
+          <div class="hardware-spec">
+            <span class="hardware-spec-label">Ownership</span>
+            <span class="hardware-spec-value">Bluffline — ours, not yours</span>
           </div>
         </div>
         <div class="hardware-card reveal">
@@ -1384,7 +1582,46 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              <p>Independent retail stores and small chains, typically 1,000-5,000 sq ft. One unit covers a wide single-room space. For larger stores or multi-room layouts, we can install multiple units and combine the data into one dashboard. Built for small business budgets, not enterprise contracts.</p>
+              <p>Independent retail stores and small chains, typically 1,000–5,000 sq ft. One unit covers a wide single-room space. For larger stores or multi-room layouts, we can install multiple units and combine the data into one dashboard. Built for small business budgets, not enterprise contracts.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Who owns the hardware?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>We do. That's why there's no install fee and no upfront equipment cost — Bluffline keeps ownership of the cameras, the sensor unit, and the software. You pay one monthly fee for the data. If you cancel after the 90-day minimum, we come get the gear.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Do I need IT staff to run this?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>No. Bluffline is built for store owners, not IT departments. We install everything, we keep it running, and we fix it when something breaks. You open a browser to see your data. That's the whole job on your end.</p>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>What if I'm not technical?</span>
+            <span class="faq-toggle">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>That's exactly who we built this for. You don't configure anything. You don't update software. You don't plug into a router. We handle the setup, we keep it running, and you look at the dashboard like you'd look at a website. If something goes wrong, we fix it.</p>
             </div>
           </div>
         </div>
@@ -1414,7 +1651,7 @@
       <div class="footer-inner">
         <div class="footer-logo">
           <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px;">
-            <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="oklch(55% 0.12 40 / 0.15)"/>
+            <path d="M4 24L10 14L16 20L22 8L28 24H4Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" style="fill: var(--brand-alpha-15)"/>
             <circle cx="22" cy="8" r="2" fill="var(--brand)"/>
           </svg>
           Bluffline Analytics
@@ -1468,6 +1705,33 @@
     });
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Theme toggle — sun/moon, persisted in localStorage
+    (function () {
+      const toggle = document.getElementById('themeToggle');
+      if (!toggle) return;
+
+      function currentTheme() {
+        return document.documentElement.getAttribute('data-theme') || 'light';
+      }
+
+      function applyTheme(theme, persist) {
+        document.documentElement.setAttribute('data-theme', theme);
+        toggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+        toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+        if (persist) {
+          try { localStorage.setItem('bluffline-theme', theme); } catch (e) {}
+        }
+      }
+
+      // Sync initial state with whatever the bootstrap script set.
+      applyTheme(currentTheme(), false);
+
+      toggle.addEventListener('click', () => {
+        const next = currentTheme() === 'dark' ? 'light' : 'dark';
+        applyTheme(next, true);
+      });
+    })();
   </script>
 </body>
 </html>
