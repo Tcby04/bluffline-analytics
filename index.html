@@ -1170,6 +1170,285 @@
       border-radius: 50%;
       background: var(--brand);
     }
+
+    /* ========================================
+       DASHBOARD PREVIEW — mockup of the actual product
+       Tagged as a placeholder so Trent knows to swap.
+       ======================================== */
+    .dashboard-frame {
+      position: relative;
+      margin-top: var(--space-2xl);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface-1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dashboard-tag {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      z-index: 3;
+      padding: var(--space-xs) var(--space-md);
+      background: var(--clay);
+      color: var(--text-on-brand);
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.02em;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .dashboard-chrome {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dash-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border-strong);
+    }
+
+    .dash-url {
+      margin-left: var(--space-md);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-family: ui-monospace, 'SF Mono', monospace;
+    }
+
+    .dashboard-body {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: 480px;
+    }
+
+    .dashboard-sidebar {
+      display: none;
+      padding: var(--space-lg) var(--space-md);
+      background: var(--surface-2);
+      border-right: 1px solid var(--border);
+    }
+
+    .dash-menu-item {
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      margin-bottom: var(--space-xs);
+    }
+
+    .dash-menu-item.active {
+      background: var(--brand-alpha-10);
+      color: var(--brand);
+      font-weight: 500;
+    }
+
+    .dashboard-main {
+      padding: var(--space-xl);
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .dash-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .dash-stat {
+      padding: var(--space-lg);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    .dash-stat-label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-xs);
+      font-weight: 500;
+    }
+
+    .dash-stat-value {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .dash-stat-delta {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: var(--space-xs);
+    }
+
+    .dash-stat-delta.up {
+      color: var(--success);
+    }
+
+    .dash-card {
+      padding: var(--space-lg);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+
+    .dash-card-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-md);
+    }
+
+    .dash-line-chart {
+      width: 100%;
+      height: 100px;
+      display: block;
+    }
+
+    .dash-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .dash-heatmap {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .dash-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 140px;
+      padding-top: var(--space-sm);
+    }
+
+    .dash-bar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .dash-bar-fill {
+      width: 100%;
+      background: var(--brand-alpha-20);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      min-height: 4px;
+    }
+
+    .dash-bar-peak {
+      background: var(--brand);
+    }
+
+    .dash-bar-label {
+      font-size: 0.6875rem;
+      color: var(--text-faint);
+    }
+
+    @media (min-width: 640px) {
+      .dash-row {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+
+    @media (min-width: 880px) {
+      .dashboard-body {
+        grid-template-columns: 180px 1fr;
+      }
+      .dashboard-sidebar {
+        display: block;
+      }
+    }
+
+    /* ========================================
+       ROI SECTION — concrete math, $250/month
+       ======================================== */
+    .roi-card {
+      max-width: 720px;
+      margin: var(--space-2xl) auto 0;
+      padding: var(--space-2xl);
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    .roi-math {
+      display: grid;
+      gap: 0;
+    }
+
+    .roi-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 1.0625rem;
+      gap: var(--space-md);
+    }
+
+    .roi-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .roi-label {
+      color: var(--text-secondary);
+    }
+
+    .roi-value {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .roi-total .roi-value {
+      color: var(--danger);
+    }
+
+    .roi-net {
+      margin-top: var(--space-md);
+      padding: var(--space-lg) var(--space-md);
+      background: var(--sage-alpha-10);
+      border: 1px solid var(--sage-alpha-20);
+      border-radius: var(--radius-md);
+    }
+
+    .roi-net .roi-label {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .roi-net .roi-value {
+      color: var(--sage);
+      font-size: 1.5rem;
+    }
+
+    .roi-note {
+      text-align: center;
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: var(--space-xl);
+    }
   </style>
 </head>
 <body>
@@ -1224,14 +1503,14 @@
       <div class="hero-content">
         <span class="badge">
           <span class="badge-dot"></span>
-          Now accepting pilot stores
+          Pilot pricing — first 5 stores
         </span>
-        <h1>Know exactly <span class="accent">how customers move</span> through your store.</h1>
+        <h1>Your cameras see customers. <span class="accent">Bluffline turns that into answers.</span></h1>
         <p class="hero-tagline">
-          Foot traffic, busy hours, dwell time, and heatmaps — all on one simple dashboard. No facial recognition. No IT guy. We install the cameras, we run them — you see the data.
+          Foot traffic, busy hours, dwell time, and heatmaps — on one dashboard that a busy store owner can read in 30 seconds. No facial recognition. No IT department required.
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary btn-lg">Schedule a Demo</a>
+          <a href="#contact" class="btn btn-primary btn-lg">Book a 30-minute demo</a>
           <a href="#solution" class="btn btn-outline btn-lg">See how it works</a>
         </div>
         <div class="hero-meta">
@@ -1246,6 +1525,132 @@
           <div class="hero-meta-item">
             <span class="hero-meta-value">100%</span>
             <span class="hero-meta-label">private — no faces recorded</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY — moved to top of homepage per redesign-priority-pass-1 -->
+  <section class="privacy" id="privacy">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Privacy isn't an add-on</span>
+        <h2 class="privacy-headline">Movement, not faces.</h2>
+        <p class="lead">Your customers care about privacy. So do we. Bluffline watches how people move — not who they are. No facial recognition. No microphones. No raw video uploaded anywhere.</p>
+      </div>
+      <div class="privacy-grid">
+        <div class="privacy-point reveal">
+          <h4>No facial recognition</h4>
+          <p>Bluffline tracks body movement — not faces, not skin, not anything that could identify someone. That's not a setting you toggle. It's how the system is built.</p>
+        </div>
+        <div class="privacy-point reveal">
+          <h4>No microphones</h4>
+          <p>There's no audio recording. Not disabled — not installed. The system only sees movement.</p>
+        </div>
+        <div class="privacy-point reveal">
+          <h4>Your data stays in your store</h4>
+          <p>Everything runs on the device mounted to your ceiling. Your raw video never gets uploaded to the cloud. You access your dashboard through a secure connection — but the footage stays put.</p>
+        </div>
+        <div class="privacy-point reveal">
+          <h4>Works without internet</h4>
+          <p>If your connection drops, the system keeps collecting data. You just won't be able to check your dashboard remotely until it comes back. Nothing is lost.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD PREVIEW — placeholder mockup, swap with real capture later -->
+  <section id="dashboard-preview">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Here's what you'll actually see</span>
+        <h2>Your dashboard, day one.</h2>
+        <p class="lead">Foot traffic, dwell time, busy hours, and heatmaps — laid out so a busy store owner can read it in 30 seconds. No PhD required.</p>
+      </div>
+      <div class="dashboard-frame reveal">
+        <div class="dashboard-tag">Sample dashboard — placeholder</div>
+        <div class="dashboard-chrome">
+          <span class="dash-dot"></span>
+          <span class="dash-dot"></span>
+          <span class="dash-dot"></span>
+          <span class="dash-url">blufflineanalytics.com/dashboard</span>
+        </div>
+        <div class="dashboard-body">
+          <aside class="dashboard-sidebar">
+            <div class="dash-menu-item active">Overview</div>
+            <div class="dash-menu-item">Heatmaps</div>
+            <div class="dash-menu-item">Traffic</div>
+            <div class="dash-menu-item">Busy Hours</div>
+            <div class="dash-menu-item">Trends</div>
+          </aside>
+          <div class="dashboard-main">
+            <div class="dash-stats">
+              <div class="dash-stat">
+                <div class="dash-stat-label">Today's Visitors</div>
+                <div class="dash-stat-value">1,247</div>
+                <div class="dash-stat-delta up">↑ 12% vs last Tue</div>
+              </div>
+              <div class="dash-stat">
+                <div class="dash-stat-label">Avg. Dwell</div>
+                <div class="dash-stat-value">8m 12s</div>
+                <div class="dash-stat-delta up">↑ 47s vs last week</div>
+              </div>
+              <div class="dash-stat">
+                <div class="dash-stat-label">Peak Hour</div>
+                <div class="dash-stat-value">12–1pm</div>
+                <div class="dash-stat-delta">Tuesdays</div>
+              </div>
+            </div>
+
+            <div class="dash-card">
+              <div class="dash-card-title">Foot Traffic — Last 7 Days</div>
+              <svg class="dash-line-chart" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="trafficFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="var(--brand)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,80 L40,65 L80,55 L120,70 L160,40 L200,30 L240,45 L280,25 L320,35 L360,15 L400,20 L400,100 L0,100 Z" fill="url(#trafficFill)"/>
+                <path d="M0,80 L40,65 L80,55 L120,70 L160,40 L200,30 L240,45 L280,25 L320,35 L360,15 L400,20" fill="none" stroke="var(--brand)" stroke-width="2"/>
+              </svg>
+            </div>
+
+            <div class="dash-row">
+              <div class="dash-card">
+                <div class="dash-card-title">Floor Heatmap</div>
+                <svg class="dash-heatmap" viewBox="0 0 400 200" aria-hidden="true">
+                  <rect x="10" y="10" width="380" height="180" fill="var(--surface-2)" stroke="var(--border)" stroke-width="1"/>
+                  <text x="22" y="32" fill="var(--text-faint)" font-size="11" font-family="var(--font-body)" letter-spacing="0.08em">ENTRANCE</text>
+                  <circle cx="200" cy="160" r="50" fill="var(--brand)" opacity="0.18"/>
+                  <circle cx="200" cy="160" r="30" fill="var(--brand)" opacity="0.32"/>
+                  <circle cx="200" cy="160" r="14" fill="var(--brand)" opacity="0.55"/>
+                  <circle cx="320" cy="80" r="40" fill="var(--brand)" opacity="0.16"/>
+                  <circle cx="320" cy="80" r="20" fill="var(--brand)" opacity="0.32"/>
+                  <circle cx="320" cy="80" r="10" fill="var(--brand)" opacity="0.5"/>
+                  <circle cx="90" cy="100" r="28" fill="var(--clay)" opacity="0.18"/>
+                  <circle cx="90" cy="100" r="14" fill="var(--clay)" opacity="0.32"/>
+                  <circle cx="90" cy="100" r="6" fill="var(--clay)" opacity="0.5"/>
+                  <circle cx="250" cy="50" r="22" fill="var(--sage)" opacity="0.22"/>
+                  <circle cx="250" cy="50" r="10" fill="var(--sage)" opacity="0.38"/>
+                </svg>
+              </div>
+              <div class="dash-card">
+                <div class="dash-card-title">Busy Hours</div>
+                <div class="dash-bars">
+                  <div class="dash-bar"><span class="dash-bar-fill" style="height: 30%"></span><span class="dash-bar-label">9a</span></div>
+                  <div class="dash-bar"><span class="dash-bar-fill" style="height: 45%"></span><span class="dash-bar-label">10a</span></div>
+                  <div class="dash-bar"><span class="dash-bar-fill" style="height: 60%"></span><span class="dash-bar-label">11a</span></div>
+                  <div class="dash-bar"><span class="dash-bar-fill dash-bar-peak" style="height: 88%"></span><span class="dash-bar-label">12p</span></div>
+                  <div class="dash-bar"><span class="dash-bar-fill dash-bar-peak" style="height: 84%"></span><span class="dash-bar-label">1p</span></div>
+                  <div class="dash-bar"><span class="dash-bar-fill" style="height: 70%"></span><span class="dash-bar-label">2p</span></div>
+                  <div class="dash-bar"><span class="dash-bar-fill" style="height: 55%"></span><span class="dash-bar-label">3p</span></div>
+                  <div class="dash-bar"><span class="dash-bar-fill" style="height: 40%"></span><span class="dash-bar-label">4p</span></div>
+                  <div class="dash-bar"><span class="dash-bar-fill" style="height: 25%"></span><span class="dash-bar-label">5p</span></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1280,8 +1685,8 @@
             </svg>
           </div>
           <div>
-            <h3>"I think we're overstaffed in the morning."</h3>
-            <p>You feel it, but can't prove it. Scheduling by gut means wasted payroll during slow hours and customers waiting during peaks.</p>
+            <h3>"We're paying people to stand around."</h3>
+            <p>Scheduling by gut means wasted payroll during slow hours and customers waiting during peaks. Without traffic data, you can't prove either problem — or fix it.</p>
           </div>
         </div>
         <div class="problem-item reveal">
@@ -1343,49 +1748,9 @@
     </div>
   </section>
 
-  <!-- UNDER THE HOOD -->
-  <section id="under-the-hood">
-    <div class="container-narrow">
-      <div class="section-header reveal">
-        <span class="eyebrow">Under the Hood</span>
-        <h2>The nerdy bit, in plain English.</h2>
-      </div>
-      <div class="reveal">
-        <p class="lead">You don't need to know any of this to use Bluffline. But if you're the kind of person who wants to know what's actually running on your ceiling, here it is.</p>
-        <p style="margin-top: var(--space-md);">The sensor unit runs an NVIDIA chip — the same kind of processor used in self-driving cars and robotics. It does all the tracking on-site, in real time. No video ever gets uploaded to the cloud.</p>
-        <p style="margin-top: var(--space-md);">When our tracking software gets better, the cameras recalibrate themselves automatically. No technician visit, no recalibration appointment. The system just figures out where every camera is and who walked where, on its own.</p>
-      </div>
-    </div>
-  </section>
+  <!-- UNDER THE HOOD removed in redesign-priority-pass-1 — tech specs move to /technical page if needed -->
 
-  <!-- PRIVACY -->
-  <section class="privacy" id="privacy">
-    <div class="container">
-      <div class="reveal">
-        <span class="eyebrow">Privacy First</span>
-        <h2 class="privacy-headline">Movement, not faces.</h2>
-        <p class="lead">Your customers care about privacy. So do we. Bluffline watches how people move — not who they are. No facial recognition. No microphones. No way to identify anyone.</p>
-      </div>
-      <div class="privacy-grid">
-        <div class="privacy-point reveal">
-          <h4>No facial recognition</h4>
-          <p>The system tracks body movement — not faces. It literally cannot tell who someone is. That's not a setting you toggle. It's how it works.</p>
-        </div>
-        <div class="privacy-point reveal">
-          <h4>No microphones</h4>
-          <p>There's no audio recording. Not disabled — not installed. The system only sees movement.</p>
-        </div>
-        <div class="privacy-point reveal">
-          <h4>Your data stays in your store</h4>
-          <p>Everything runs on the device mounted to your ceiling. Your video never gets uploaded anywhere. You access your dashboard through a secure connection — but the raw footage stays put.</p>
-        </div>
-        <div class="privacy-point reveal">
-          <h4>Reliable</h4>
-          <p>If your internet drops, the system keeps collecting data. You just won't be able to check your dashboard remotely until it comes back. Nothing is lost.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- PRIVACY (old location removed in redesign-priority-pass-1 — moved to top of homepage) -->
 
   <!-- PRICING -->
   <section id="pricing">
@@ -1427,6 +1792,42 @@
         </div>
       </div>
       <p class="pricing-note">$250/month per store. One price. No install fee. 90-day minimum.</p>
+    </div>
+  </section>
+
+  <!-- ROI — concrete math for $250/month (redesign-priority-pass-1) -->
+  <section id="roi">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Does the math work?</span>
+        <h2>Pay for itself with one staffing fix.</h2>
+        <p class="lead">If better scheduling saves you just 2 hours of unnecessary labor per day, Bluffline can pay for itself.</p>
+      </div>
+      <div class="roi-card reveal">
+        <div class="roi-math">
+          <div class="roi-row">
+            <span class="roi-label">Average retail hourly wage</span>
+            <span class="roi-value">~$15/hr</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">2 hours of unnecessary labor per day</span>
+            <span class="roi-value">$30/day</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">× 30 days</span>
+            <span class="roi-value">$900/month wasted</span>
+          </div>
+          <div class="roi-row roi-total">
+            <span class="roi-label">Bluffline cost</span>
+            <span class="roi-value">−$250/month</span>
+          </div>
+          <div class="roi-row roi-net">
+            <span class="roi-label">Net savings from staffing alone</span>
+            <span class="roi-value">$650/month saved</span>
+          </div>
+        </div>
+        <p class="roi-note">That's just staffing. Merchandising, layout, marketing — most stores find a second win within the first 90 days.</p>
+      </div>
     </div>
   </section>
 
@@ -1504,7 +1905,7 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              <p>No. The system tracks body movement — not faces, not skin, not anything that could identify someone. It sees a person the way a motion sensor sees a person. There's no way to link movement to a name, a loyalty account, or a returning customer.</p>
+              <p>No. Bluffline tracks body movement — not faces, not skin, not anything that could identify someone. It sees a person the way a motion sensor sees a person. Bluffline does not link movement to a name, a loyalty account, or a returning customer.</p>
             </div>
           </div>
         </div>
@@ -1634,10 +2035,10 @@
     <div class="container">
       <div class="reveal">
         <span class="eyebrow">Get Started</span>
-        <h2>See your store differently.</h2>
-        <p>Schedule a 30-minute demo. We'll show you the dashboard, walk through what you'll see, and answer every question you've got. No pressure, no sales pipeline — just a conversation about your store.</p>
+        <h2>See what your customers actually do.</h2>
+        <p>Book a 30-minute demo. We'll show you the dashboard, walk through what you'd actually see in your store, and answer every question you've got. If it's not a fit for your business, we'll tell you.</p>
         <div class="cta-actions">
-          <a href="mailto:hello@blufflineanalytics.com" class="btn btn-primary btn-lg">Schedule a Demo</a>
+          <a href="mailto:hello@blufflineanalytics.com" class="btn btn-primary btn-lg">Book a 30-minute demo</a>
           <a href="mailto:hello@blufflineanalytics.com" class="btn btn-outline btn-lg">Email us</a>
         </div>
         <p class="cta-contact">Questions? Email <a href="mailto:hello@blufflineanalytics.com">hello@blufflineanalytics.com</a></p>
